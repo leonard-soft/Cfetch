@@ -1,6 +1,6 @@
 # Maintainer: leonard-soft - leoberfo@gmail.com
 pkgname=cfetch
-pkgver=1.0
+pkgver=1.1
 pkgrel=1
 pkgdesc="A simple program to get system information"
 arch=('x86_64')
