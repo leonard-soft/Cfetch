@@ -9,13 +9,15 @@
 char *get_system_vendor() 
 {
     FILE *file = fopen("/sys/class/dmi/id/sys_vendor", "r");
-    if (file == NULL) {
+    if (file == NULL) 
+    {
         perror("Error al abrir el archivo sys_vendor");
         return NULL;
     }
 
     char vendor[256];
-    if (fgets(vendor, sizeof(vendor), file) == NULL) {
+    if (fgets(vendor, sizeof(vendor), file) == NULL) 
+    {
         perror("Error al leer el archivo sys_vendor");
         fclose(file);
         return NULL;
@@ -128,7 +130,8 @@ char *get_shell()
 {
     const char *shell = getenv("SHELL");
     char * shell_pointer = (char *)malloc(45 * sizeof(char));
-    if (shell != NULL) {
+    if (shell != NULL) 
+    {
         strcpy(shell_pointer, shell);
     }
     return shell_pointer;
@@ -137,7 +140,8 @@ char *get_shell()
 char *get_display_resolution() 
 {
     Display *display = XOpenDisplay(NULL);
-    if (display == NULL) {
+    if (display == NULL) 
+    {
         printf("No se pudo conectar al servidor X.\n");
         return NULL;
     }
@@ -164,7 +168,8 @@ char *get_desktop()
 {
     const char *desktop_env = getenv("DESKTOP_SESSION");
     char *desktop = (char *)malloc(45 * sizeof(char));
-    if (desktop_env != NULL) {
+    if (desktop_env != NULL) 
+    {
         strcpy(desktop, desktop_env);
     } 
     return desktop;
@@ -285,7 +290,8 @@ char *get_gpu_info()
         gpu[254] = '\0';
     }
 
-    if (gpu[0] == '\0') {
+    if (gpu[0] == '\0') 
+    {
         printf("No se encontró información sobre la GPU.\n");
         free(gpu);
         pclose(fp);
@@ -304,7 +310,7 @@ char *get_kernel()
         return NULL;
     }
     char *kernel = (char *)malloc(45 * sizeof(char));
-    sprintf(kernel, sys_info.release);
+    sprintf(kernel, "%s", sys_info.release);
     return kernel;
 }
 
@@ -320,8 +326,10 @@ char *get_memory_info()
     char line[256];
     char *memory = (char *)malloc(300 * sizeof(char)); 
 
-    while (fgets(line, sizeof(line), fp_meminfo)) {
-        if (strncmp(line, "MemTotal:", 9) == 0) {
+    while (fgets(line, sizeof(line), fp_meminfo)) 
+    {
+        if (strncmp(line, "MemTotal:", 9) == 0) 
+        {
             sscanf(line, "MemTotal: %s", memory);
             break;
         }
@@ -335,7 +343,8 @@ char *get_total_space_info()
 {
     struct statvfs fs_info;
     char *free_space_info = (char *)malloc(45 * sizeof(char));
-    if (statvfs("/", &fs_info) == 0) {
+    if (statvfs("/", &fs_info) == 0) 
+    {
         unsigned long total_space = fs_info.f_blocks * fs_info.f_frsize;
         unsigned long free_space = fs_info.f_bfree * fs_info.f_frsize;
         int f_space = free_space / (1024 * 1024 * 1024);
@@ -344,7 +353,9 @@ char *get_total_space_info()
         sprintf(ts_space, " %i GB", t_space);
         sprintf(free_space_info, "%i GB of", f_space);
         strcat(free_space_info, ts_space);
-    } else {
+    } 
+    else 
+    {
         perror("Error al obtener el espacio en disco");
     }
     return free_space_info;
