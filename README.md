@@ -28,3 +28,4 @@
 ```bash
 git clone https://github.com/your-username/cfetch.git
 cd cfetch
+makepkg -si
